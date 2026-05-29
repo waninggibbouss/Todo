@@ -61,7 +61,11 @@
         }
 
         function addDoc() {
-            $("#doc").html($("#embed-link").val());
+            let link = $("#embed-link").val();
+
+            $("#doc").html(`
+                <iframe src="${link}"></iframe>
+            `);
         }
     </script>
     <style defer>
