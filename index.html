@@ -61,11 +61,7 @@
         }
 
         function addDoc() {
-            let link = $("#embed-link").val();
-
-            $("#doc").html(`
-                <iframe src="${link}"></iframe>
-            `);
+            $("#doc").html($("#embed-link").val());
         }
     </script>
     <style defer>
@@ -111,7 +107,8 @@
         }
 
         #doc {
-            width: 100%;
+            width: 100% !important;
+            height: 1000px !important;
         }
     </style>
 </head>
