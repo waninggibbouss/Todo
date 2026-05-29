@@ -23,7 +23,7 @@
             }
 
             $("<input>", {type: "text", placeholder: "Name..."}).appendTo(name);
-            $("<input>", {type: "date", class: "assignment-due-date"}).appendTo(dueDate);
+            $("<input>", {type: "date", class: "assignment-due-date", click: function() {updateDate(this)} }).appendTo(dueDate);
             $("<p>", {class: "assignment-days-left"}).appendTo(daysLeft);
             
             {
@@ -59,6 +59,25 @@
             div.style.backgroundColor =
                 colorMap[getComputedStyle(div).backgroundColor];
         }
+
+        function updateDate(task) {
+        let date =
+            task.querySelector(".assignment-due-date").valueAsDate;
+
+        if (date === null) return;
+
+        let now = new Date();
+
+        let days = Math.ceil((date - now) / 86400000);
+
+        task.querySelector(".assignment-days-left").textContent = `${days} days left`;
+    }
+
+    setInterval(() => {
+        $(".task").each(function () {
+            updateDate(this);
+        });
+    }, 40000000);
     </script>
     <style defer>
         * {
@@ -114,7 +133,7 @@
                 <input type="text" placeholder="Name...">
             </div>
             <div>
-                <input type="date" class="assignment-due-date">
+                <input type="date" class="assignment-due-date" onclick="updateDate(this.closest(".task))">
             </div>
             <div>
                 <p class="assignment-days-left"></p>
