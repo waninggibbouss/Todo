@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script defer>
+        function newTask() {
+            let task = $("<div>", {class: "task", style: "background-color: #ffffff"}).insertBefore($("#new-button"));
+            $("<div>", {class: "color-button", click: function() {change(this)} }).appendTo(task);
+            let band = $("<div>").appendTo(task);
+            let name = $("<div>").appendTo(task);
+            let dueDate = $("<div>").appendTo(task);
+            let daysLeft = $("<div>").appendTo(task);
+            let priority = $("<div>").appendTo(task);
+            let progress = $("<div>").appendTo(task);
+
+            {
+                let select = $("<select>").appendTo(band);
+                
+                ["English", "Math", "Science", "History", "Language", "Compsci"].forEach(e => {
+                    $("<option>", {text: e}).appendTo(select);
+                });
+            }
+
+            $("<input>", {type: "text", placeholder: "Name..."}).appendTo(name);
+            $("<input>", {type: "date", class: "assignment-due-date"}).appendTo(dueDate);
+            $("<p>", {class: "assignment-days-left"}).appendTo(daysLeft);
+            
+            {
+                let select = $("<select>").appendTo(priority);
+                
+                ["High", "Medium", "Low", "Optional"].forEach(e => {
+                    $("<option>", {text: e}).appendTo(select);
+                });
+            }
+
+            {
+                let select = $("<select>").appendTo(progress);
+                
+                ["Not started", "In progress", "Almost done", "Done"].forEach(e => {
+                    $("<option>", {text: e}).appendTo(select);
+                });
+            }
+        }
+
+        function change(e) {
+            let div = e.parentElement;
+
+            const colorMap = {
+                "rgb(255, 255, 255)": "#756198",
+                "rgb(117, 97, 152)": "#4881a7",
+                "rgb(72, 129, 167)": "#599a5d",
+                "rgb(89, 154, 93)": "#b4af38",
+                "rgb(180, 175, 56)": "#b37d58",
+                "rgb(179, 125, 88)": "#a85051",
+                "rgb(168, 80, 81)": "#ffffff"
+            };
+
+            div.style.backgroundColor =
+                colorMap[getComputedStyle(div).backgroundColor];
+        }
+
+        function addDoc() {
+            $("#doc").innerHtml = $("#embed-link").value;
+        }
+    </script>
+    <style defer>
+        body {
+            display: flex;
+            background-color: bisque;
+        }
+
+        #task-container {
+            display: flex;
+            flex-direction: column;
+            width: 58%;
+        }
+
+        #other-container {
+            display: flex;
+            flex-direction: column;
+            width: 43%;
+        }
+
+        .task {
+            border-radius: 5px;
+            display: flex;
+            height: 100px;
+        }
+
+        .color-button {
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="task-container">
+        <div class="task" style="background-color: #ffffff">
+            <div class="color-button" onclick="change(this)"></div>
+            <div>
+                <select>
+                    <option>English</option>
+                    <option>Math</option>
+                    <option>Science</option>
+                    <option>History</option>
+                    <option>Language</option>
+                    <option>Compsci</option>
+                </select>
+            </div>
+            <div>
+                <input type="text" placeholder="Name...">
+            </div>
+            <div>
+                <input type="date" class="assignment-due-date">
+            </div>
+            <div>
+                <p class="assignment-days-left"></p>
+            </div>
+            <div>
+                <select>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                    <option>Optional</option>
+                </select>
+            </div>
+            <div>
+                <select>
+                    <option>Not started</option>
+                    <option>In progress</option>
+                    <option>Almost done</option>
+                    <option>Done</option>
+                </select>
+            </div>
+        </div>
+        <button id="new-button" onclick="newTask()">New Task</button>
+    </div>
+    <div id="other-container">
+        <div id="doc"></div>
+        <label for="embed-link">Link: </label><input type="text" id="embed-link">
+        <button onclick="addDoc()">Embed</button>
+    </div>
+</body>
